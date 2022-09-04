@@ -1,6 +1,8 @@
-import { Form, Button, Row, Col } from "react-bootstrap";
-import Forms from "../components/forms";
+import { Form, Button, Row, Col, Modal } from "react-bootstrap";
 import { useState } from "react";
+
+import Forms from "../components/forms";
+import ModalUpdate from "../components/modalUpdate";
 
 const Register = () => {
 	const [email, setEmail] = useState();
@@ -49,6 +51,13 @@ const Register = () => {
 							<li>Email : {email}</li>
 							<li>Username : {username}</li>
 							<li>Password : {password}</li>
+							<li>
+								<ModalUpdate
+									email={email}
+									username={username}
+									password={password}
+								/>
+							</li>
 						</ul>
 					</div>
 				</Col>

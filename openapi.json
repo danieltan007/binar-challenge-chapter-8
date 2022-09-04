@@ -18,161 +18,27 @@
 	},
 	"servers": [
 		{
-			"url": "https://localhost:4000/api/v1"
+			"url": "http://localhost:4000/api/v1"
 		}
 	],
 	"tags": [
 		{
 			"name": "player",
 			"description": "Everything about Players"
-		},
-		{
-			"name": "user",
-			"description": "Operations about user"
 		}
 	],
 	"paths": {
-		"/player/{id}": {
-			"put": {
-				"tags": [
-					"player"
-				],
-				"summary": "Update an existing player",
-				"description": "Update an existing pet by Id",
-				"operationId": "updatePet",
-				"requestBody": {
-					"description": "Update an existent pet in the store",
-					"content": {
-						"application/json": {
-							"schema": {
-								"$ref": "#/components/schemas/Player"
-							}
-						}
-					},
-					"required": true
-				},
-				"responses": {
-					"200": {
-						"description": "Successful operation",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/Pet"
-								}
-							},
-							"application/xml": {
-								"schema": {
-									"$ref": "#/components/schemas/Pet"
-								}
-							}
-						}
-					},
-					"400": {
-						"description": "Invalid ID supplied"
-					},
-					"404": {
-						"description": "Pet not found"
-					},
-					"405": {
-						"description": "Validation exception"
-					}
-				},
-				"security": [
-					{
-						"petstore_auth": [
-							"write:pets",
-							"read:pets"
-						]
-					}
-				]
-			},
-			"post": {
-				"tags": [
-					"Player"
-				],
-				"summary": "Add a new pet to the store",
-				"description": "Add a new pet to the store",
-				"operationId": "addPet",
-				"requestBody": {
-					"description": "Create a new pet in the store",
-					"content": {
-						"application/json": {
-							"schema": {
-								"$ref": "#/components/schemas/Pet"
-							}
-						},
-						"application/xml": {
-							"schema": {
-								"$ref": "#/components/schemas/Pet"
-							}
-						},
-						"application/x-www-form-urlencoded": {
-							"schema": {
-								"$ref": "#/components/schemas/Pet"
-							}
-						}
-					},
-					"required": true
-				},
-				"responses": {
-					"200": {
-						"description": "Successful operation",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/Pet"
-								}
-							},
-							"application/xml": {
-								"schema": {
-									"$ref": "#/components/schemas/Pet"
-								}
-							}
-						}
-					},
-					"405": {
-						"description": "Invalid input"
-					}
-				},
-				"security": [
-					{
-						"petstore_auth": [
-							"write:pets",
-							"read:pets"
-						]
-					}
-				]
-			}
-		},
-		"/pet/findByStatus": {
+		"/players": {
+			"tags": [
+				"player"
+			],
 			"get": {
-				"tags": [
-					"pet"
-				],
-				"summary": "Finds Pets by status",
-				"description": "Multiple status values can be provided with comma separated strings",
-				"operationId": "findPetsByStatus",
-				"parameters": [
-					{
-						"name": "status",
-						"in": "query",
-						"description": "Status values that need to be considered for filter",
-						"required": false,
-						"explode": true,
-						"schema": {
-							"type": "string",
-							"default": "available",
-							"enum": [
-								"available",
-								"pending",
-								"sold"
-							]
-						}
-					}
-				],
+				"summary": "Get all players",
+				"description": "Get all players in the database",
+				"operationId": "getAllPlayers",
 				"responses": {
 					"200": {
-						"description": "successful operation",
+						"description": "Success",
 						"content": {
 							"application/json": {
 								"schema": {
@@ -186,221 +52,256 @@
 								"schema": {
 									"type": "array",
 									"items": {
-										"$ref": "#/components/schemas/Pet"
+										"$ref": "#/components/schemas/Player"
 									}
 								}
 							}
 						}
 					},
-					"400": {
-						"description": "Invalid status value"
+					"404": {
+						"description": "no players"
 					}
+				}
+			},
+			"post": {
+				"tags": [
+					"player"
+				],
+				"summary": "Add a new player to the database",
+				"description": "Add a new player to the database",
+				"operationId": "addPlayer",
+				"requestBody": {
+					"description": "Create a new player in the database",
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/Player"
+							}
+						},
+						"application/xml": {
+							"schema": {
+								"$ref": "#/components/schemas/Player"
+							}
+						},
+						"application/x-www-form-urlencoded": {
+							"schema": {
+								"$ref": "#/components/schemas/Player"
+							}
+						}
+					},
+					"required": true
 				},
-				"security": [
-					{
-						"petstore_auth": [
-							"write:pets",
-							"read:pets"
-						]
+				"responses": {
+					"201": {
+						"description": "Success",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Player"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/Player"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Username or Passwrod cannot be empty"
 					}
-				]
+				}
 			}
 		},
-		"/pet/findByTags": {
-			"get": {
-				"tags": [
-					"pet"
-				],
-				"summary": "Finds Pets by tags",
-				"description": "Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.",
-				"operationId": "findPetsByTags",
+		"/players/{id}": {
+			"put": {
 				"parameters": [
 					{
-						"name": "tags",
-						"in": "query",
-						"description": "Tags to filter by",
-						"required": false,
-						"explode": true,
+						"name": "id",
+						"in": "path",
+						"description": "player id",
+						"required": true,
 						"schema": {
-							"type": "array",
-							"items": {
-								"type": "string"
-							}
+							"type": "integer",
+							"minimum": 1
 						}
 					}
 				],
+				"tags": [
+					"player"
+				],
+				"summary": "Update an existing player by id",
+				"description": "Update an existing player by Id",
+				"operationId": "updatePlayer",
+				"requestBody": {
+					"description": "Update an existent player in the database",
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/Player"
+							}
+						}
+					},
+					"required": true
+				},
 				"responses": {
 					"200": {
-						"description": "successful operation",
+						"description": "Player with id successfully updated",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Player"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/Player"
+								}
+							}
+						}
+					},
+					"500": {
+						"description": "failed to update"
+					},
+					"404" : {
+						"description" : "Player not found"
+					}
+				}
+			},
+			"get": {
+				"tags": [
+					"player"
+				],
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"description": "player id",
+						"required": true,
+						"schema": {
+							"type": "integer",
+							"minimum": 1
+						}
+					}
+				],
+				"summary": "get player based on Id",
+				"description": "get player based on Id",
+				"operationId": "getPlayerById",
+				"responses": {
+					"200": {
+						"description": "Success",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Player"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/Player"
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "Player not found or empty"
+					}
+				}
+			},
+			"delete": {
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"description": "player id",
+						"required": true,
+						"schema": {
+							"type": "integer",
+							"minimum": 1
+						}
+					}
+				],
+				"tags": [
+					"player"
+				],
+				"summary": "Deletes a Player",
+				"description": "delete a Player",
+				"operationId": "deletePlayer",
+				"responses": {
+					"400": {
+						"description": "Cannot delete Player with id. Maybe Player was not found!"
+					},
+					"404": {
+						"description": "Player not found"
+					}
+				}
+			}
+		},
+		"/players/exp/{id}": {
+			"post": {
+				"tags": [
+					"player"
+				],
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"description": "player id",
+						"required": true,
+						"schema": {
+							"type": "integer",
+							"minimum": 1
+						}
+					}
+				],
+				"summary": "update player experience based on player id",
+				"description": "update player experience based on player id",
+				"operationId": "updateExpById",
+				"requestBody": {
+						"description": "input exp",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Player"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/Player"
+								}
+							},
+							"application/x-www-form-urlencoded": {
+								"schema": {
+									"$ref": "#/components/schemas/Player"
+								}
+							}
+						},
+						"required": true
+					},
+				"responses": {
+					"200": {
+						"description": "success",
 						"content": {
 							"application/json": {
 								"schema": {
 									"type": "array",
 									"items": {
-										"$ref": "#/components/schemas/Pet"
-									}
-								}
-							},
-							"application/xml": {
-								"schema": {
-									"type": "array",
-									"items": {
-										"$ref": "#/components/schemas/Pet"
+										"$ref": "#/components/schemas/Player"
 									}
 								}
 							}
 						}
 					},
 					"400": {
-						"description": "Invalid tag value"
-					}
-				},
-				"security": [
-					{
-						"petstore_auth": [
-							"write:pets",
-							"read:pets"
-						]
-					}
-				]
-			}
-		},
-		"/pet/{petId}": {
-			"get": {
-				"tags": [
-					"pet"
-				],
-				"summary": "Find pet by ID",
-				"description": "Returns a single pet",
-				"operationId": "getPetById",
-				"parameters": [
-					{
-						"name": "petId",
-						"in": "path",
-						"description": "ID of pet to return",
-						"required": true,
-						"schema": {
-							"type": "integer",
-							"format": "int64"
-						}
-					}
-				],
-				"responses": {
-					"200": {
-						"description": "successful operation"
-					},
-					"400": {
-						"description": "Invalid ID supplied"
+						"description": "Exp field cannot be empty, or cannot update player with id"
 					},
 					"404": {
-						"description": "Pet not found"
+						"description":"Player not found"
 					}
-				},
-				"security": [
-					{
-						"api_key": []
-					},
-					{
-						"petstore_auth": [
-							"write:pets",
-							"read:pets"
-						]
-					}
-				]
-			},
-			"post": {
-				"tags": [
-					"pet"
-				],
-				"summary": "Updates a pet in the store with form data",
-				"description": "",
-				"operationId": "updatePetWithForm",
-				"parameters": [
-					{
-						"name": "petId",
-						"in": "path",
-						"description": "ID of pet that needs to be updated",
-						"required": true,
-						"schema": {
-							"type": "integer",
-							"format": "int64"
-						}
-					},
-					{
-						"name": "name",
-						"in": "query",
-						"description": "Name of pet that needs to be updated",
-						"schema": {
-							"type": "string"
-						}
-					},
-					{
-						"name": "status",
-						"in": "query",
-						"description": "Status of pet that needs to be updated",
-						"schema": {
-							"type": "string"
-						}
-					}
-				],
-				"responses": {
-					"405": {
-						"description": "Invalid input"
-					}
-				},
-				"security": [
-					{
-						"petstore_auth": [
-							"write:pets",
-							"read:pets"
-						]
-					}
-				]
-			},
-			"delete": {
-				"tags": [
-					"pet"
-				],
-				"summary": "Deletes a pet",
-				"description": "delete a pet",
-				"operationId": "deletePet",
-				"parameters": [
-					{
-						"name": "api_key",
-						"in": "header",
-						"description": "",
-						"required": false,
-						"schema": {
-							"type": "string"
-						}
-					},
-					{
-						"name": "petId",
-						"in": "path",
-						"description": "Pet id to delete",
-						"required": true,
-						"schema": {
-							"type": "integer",
-							"format": "int64"
-						}
-					}
-				],
-				"responses": {
-					"400": {
-						"description": "Invalid pet value"
-					}
-				},
-				"security": [
-					{
-						"petstore_auth": [
-							"write:pets",
-							"read:pets"
-						]
-					}
-				]
+				}
 			}
 		}
-	},
+},
 	"components": {
 		"schemas": {
 			"Player": {
@@ -413,7 +314,7 @@
 					"id": {
 						"type": "integer",
 						"format": "int64",
-						"example": 10
+						"example": 1
 					},
 					"username": {
 						"type": "string",

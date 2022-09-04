@@ -7,10 +7,10 @@ function App() {
 	return (
 		<Container className="p-4">
 			<Row sm={1} md={1}>
-				<h1 align="center">Edit Player</h1>
+				{/* <h1 align="center">Edit Player</h1>
 				<Col className="p-3">
 					<Edit />
-				</Col>
+				</Col> */}
 				<Col className="p-3">
 					<h1 align="center">Daftar Player</h1>
 					<Register />
