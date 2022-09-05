@@ -1,6 +1,5 @@
 import { Form } from "react-bootstrap";
-import Forms from "../components/forms";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 const Search = () => {
 	const [id, setId] = useState();
