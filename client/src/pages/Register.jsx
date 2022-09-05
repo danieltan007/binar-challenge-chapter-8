@@ -16,7 +16,7 @@ const Register = () => {
 		setPassword(event.target.regisPassword.value);
 	};
 
-	const updateData = (email, username, password) => {
+	const updateData = (username, password, email) => {
 		setEmail(email);
 		setUsername(username);
 		setPassword(password);

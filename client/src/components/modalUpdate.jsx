@@ -8,16 +8,30 @@ import { useState, useEffect } from "react";
 
 const ModalUpdate = ({ email, username, password, onSubmit }) => {
 	const [show, setShow] = useState(false);
-	// const [updateEmail, setUpdateEmail] = useState();
-	// const [updateUsername, setUpdateUsername] = useState();
-	// const [updatePassword, setUpdatePassword] = useState();
+	const [updateEmail, setUpdateEmail] = useState();
+	const [updateUsername, setUpdateUsername] = useState("");
+	const [updatePassword, setUpdatePassword] = useState("");
+
+	useEffect(() => {
+		setUpdateEmail(updateEmail);
+		console.log("email ", updateEmail);
+	}, [updateEmail]);
+
+	useEffect(() => {
+		setUpdateUsername(updateUsername);
+		// console.log("email ", updateEmail);
+	}, [updateUsername]);
+
+	useEffect(() => {
+		setUpdatePassword(updatePassword);
+	}, [updatePassword]);
 
 	const handleSubmit = (event) => {
 		event.preventDefault();
-		email = event.target.email.value;
-		username = event.target.username.value;
-		password = event.target.password.value;
-		console.log("cek data modal = ", email, username, password);
+		email = updateEmail.target.value;
+		username = updateUsername.target.value;
+		password = updatePassword.target.value;
+		console.log("cek data modal = ", updateEmail, username, password);
 	};
 
 	const modalClose = () => setShow(false);
@@ -33,7 +47,7 @@ const ModalUpdate = ({ email, username, password, onSubmit }) => {
 					<Modal.Title>Update Player</Modal.Title>
 				</Modal.Header>
 				<Modal.Body>
-					<Form>
+					<Form onSubmit={handleSubmit}>
 						<Form.Group className="mb-3">
 							<Form.Label>email</Form.Label>
 							<Form.Control
@@ -41,7 +55,7 @@ const ModalUpdate = ({ email, username, password, onSubmit }) => {
 								placeholder="masukkan email baru Anda"
 								name="email"
 								defaultValue={email}
-								// onChange={setUpdateEmail}
+								onChange={setUpdateEmail}
 								required
 							/>
 						</Form.Group>
@@ -52,6 +66,7 @@ const ModalUpdate = ({ email, username, password, onSubmit }) => {
 								placeholder="masukkan username baru Anda"
 								name="username"
 								defaultValue={username}
+								onChange={setUpdateUsername}
 								required
 							/>
 						</Form.Group>
@@ -62,6 +77,7 @@ const ModalUpdate = ({ email, username, password, onSubmit }) => {
 								defaultValue={password}
 								placeholder="masukkan password baru Anda"
 								name="password"
+								onChange={setUpdatePassword}
 								required
 							/>
 						</Form.Group>
@@ -69,9 +85,8 @@ const ModalUpdate = ({ email, username, password, onSubmit }) => {
 							variant="primary"
 							type="submit"
 							onClick={() => {
-								handleSubmit();
 								onSubmit(username, password, email);
-								// modalClose();
+								modalClose();
 							}}
 						>
 							Update Player
