@@ -1,20 +1,23 @@
 import { Button, Modal, Form } from "react-bootstrap";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 // let updateData = "";
 // const getupdate = (event) => {
 // 	updateData = event.target.value;
 // };
 
-const ModalUpdate = ({ email, username, password, onClick }) => {
+const ModalUpdate = ({ email, username, password, onSubmit }) => {
 	const [show, setShow] = useState(false);
-	let email, username, password;
+	// const [updateEmail, setUpdateEmail] = useState();
+	// const [updateUsername, setUpdateUsername] = useState();
+	// const [updatePassword, setUpdatePassword] = useState();
 
 	const handleSubmit = (event) => {
 		event.preventDefault();
 		email = event.target.email.value;
 		username = event.target.username.value;
 		password = event.target.password.value;
+		console.log("cek data modal = ", email, username, password);
 	};
 
 	const modalClose = () => setShow(false);
@@ -38,6 +41,7 @@ const ModalUpdate = ({ email, username, password, onClick }) => {
 								placeholder="masukkan email baru Anda"
 								name="email"
 								defaultValue={email}
+								// onChange={setUpdateEmail}
 								required
 							/>
 						</Form.Group>
@@ -61,24 +65,22 @@ const ModalUpdate = ({ email, username, password, onClick }) => {
 								required
 							/>
 						</Form.Group>
+						<Button
+							variant="primary"
+							type="submit"
+							onClick={() => {
+								handleSubmit();
+								onSubmit(username, password, email);
+								// modalClose();
+							}}
+						>
+							Update Player
+						</Button>
 					</Form>
 				</Modal.Body>
 				<Modal.Footer>
 					<Button variant="secondary" onClick={modalClose}>
 						Close
-					</Button>
-					<Button
-						variant="primary"
-						type="submit"
-						onClick={() => {
-							handleSubmit();
-							onClick(() => {
-								onClick(email, password, username);
-							});
-							modalClose();
-						}}
-					>
-						Update Player
 					</Button>
 				</Modal.Footer>
 			</Modal>

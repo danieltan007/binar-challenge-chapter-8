@@ -16,6 +16,13 @@ const Register = () => {
 		setPassword(event.target.regisPassword.value);
 	};
 
+	const updateData = (email, username, password) => {
+		setEmail(email);
+		setUsername(username);
+		setPassword(password);
+		console.log("cek data masuk = ", email, username, password);
+	};
+
 	return (
 		<>
 			<Row>
@@ -56,6 +63,7 @@ const Register = () => {
 									email={email}
 									username={username}
 									password={password}
+									onSubmit={updateData}
 								/>
 							</li>
 						</ul>
