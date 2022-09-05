@@ -6,20 +6,18 @@ import { useState, useEffect } from "react";
 // 	updateData = event.target.value;
 // };
 
-const ModalUpdate = ({ email, username, password, onSubmit }) => {
+const ModalUpdate = ({ email, username, password, onClick }) => {
 	const [show, setShow] = useState(false);
-	const [updateEmail, setUpdateEmail] = useState();
-	const [updateUsername, setUpdateUsername] = useState("");
-	const [updatePassword, setUpdatePassword] = useState("");
+	const [updateEmail, setUpdateEmail] = useState(email);
+	const [updateUsername, setUpdateUsername] = useState(username);
+	const [updatePassword, setUpdatePassword] = useState(password);
 
 	useEffect(() => {
 		setUpdateEmail(updateEmail);
-		console.log("email ", updateEmail);
 	}, [updateEmail]);
 
 	useEffect(() => {
 		setUpdateUsername(updateUsername);
-		// console.log("email ", updateEmail);
 	}, [updateUsername]);
 
 	useEffect(() => {
@@ -27,11 +25,14 @@ const ModalUpdate = ({ email, username, password, onSubmit }) => {
 	}, [updatePassword]);
 
 	const handleSubmit = (event) => {
+		console.log(
+			"🚀 ~ file: modalUpdate.jsx ~ line 28 ~ handleSubmit ~ event",
+			event
+		);
 		event.preventDefault();
-		email = updateEmail.target.value;
-		username = updateUsername.target.value;
-		password = updatePassword.target.value;
-		console.log("cek data modal = ", updateEmail, username, password);
+		email = updateEmail.target["value"] || email;
+		username = updateUsername.target["value"] || username;
+		password = updatePassword.target["value"] || password;
 	};
 
 	const modalClose = () => setShow(false);
@@ -47,7 +48,13 @@ const ModalUpdate = ({ email, username, password, onSubmit }) => {
 					<Modal.Title>Update Player</Modal.Title>
 				</Modal.Header>
 				<Modal.Body>
-					<Form onSubmit={handleSubmit}>
+					<Form
+						onSubmit={(event) => {
+							handleSubmit(event);
+							onClick(username, password, email);
+							modalClose();
+						}}
+					>
 						<Form.Group className="mb-3">
 							<Form.Label>email</Form.Label>
 							<Form.Control
@@ -81,14 +88,7 @@ const ModalUpdate = ({ email, username, password, onSubmit }) => {
 								required
 							/>
 						</Form.Group>
-						<Button
-							variant="primary"
-							type="submit"
-							onClick={() => {
-								onSubmit(username, password, email);
-								modalClose();
-							}}
-						>
+						<Button variant="primary" type="submit">
 							Update Player
 						</Button>
 					</Form>

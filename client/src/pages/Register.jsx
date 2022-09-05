@@ -27,7 +27,7 @@ const Register = () => {
 		<>
 			<Row>
 				<Col>
-					<Form onSubmit={handleSubmit}>
+					<Form onSubmit={handleSubmit} method="post" action="#">
 						<Forms
 							label={"email"}
 							placeholder={"masukkan email Anda"}
@@ -63,7 +63,7 @@ const Register = () => {
 									email={email}
 									username={username}
 									password={password}
-									onSubmit={updateData}
+									onClick={updateData}
 								/>
 							</li>
 						</ul>
