@@ -25,10 +25,6 @@ const ModalUpdate = ({ email, username, password, onClick }) => {
 	}, [updatePassword]);
 
 	const handleSubmit = (event) => {
-		console.log(
-			"🚀 ~ file: modalUpdate.jsx ~ line 28 ~ handleSubmit ~ event",
-			event
-		);
 		event.preventDefault();
 		email = updateEmail.target["value"] || email;
 		username = updateUsername.target["value"] || username;

@@ -1,67 +1,32 @@
-import { Form, Button, Row, Col } from "react-bootstrap";
+import { Form } from "react-bootstrap";
 import Forms from "../components/forms";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const Search = () => {
-	const [email, setEmail] = useState();
-	const [username, setUsername] = useState();
-	const [exp, setExp] = useState();
-	const [lvl, setLvl] = useState();
-
-	const handleSubmit = (event) => {
-		event.preventDefault();
-		setEmail(event.target.searchEmail.value);
-		setUsername(event.target.searchUsername.value);
-		setExp(event.target.searchExp.value);
-		setLvl(event.target.searchLvl.value);
+	const [id, setId] = useState();
+	const handleChange = (event) => {
+		console.log(
+			"🚀 ~ file: Search.jsx ~ line 14 ~ handleChange ~ event",
+			event
+		);
+		setId(event.target.value);
 	};
 
 	return (
 		<>
-			<Row>
-				<Col>
-					<Form onSubmit={handleSubmit}>
-						<Forms
-							label={"email"}
-							placeholder={"masukkan email"}
-							type={"email"}
-							name={"searchEmail"}
-						/>
-						<Forms
-							label={"username"}
-							placeholder={"masukkan username"}
-							type={"text"}
-							name={"searchUsername"}
-						/>
-						<Forms
-							label={"experience"}
-							placeholder={"masukkan experience"}
-							type={"number"}
-							name={"searchExp"}
-						/>
-						<Forms
-							label={"level"}
-							placeholder={"masukkan level"}
-							type={"number"}
-							name={"searchLvl"}
-						/>
-						<Button variant="success" type="submit">
-							Search
-						</Button>
-					</Form>
-				</Col>
-				<Col>
-					<h2>Show Data</h2>
-					<div id="tampilData">
-						<ul>
-							<li>Email : {email}</li>
-							<li>Username : {username}</li>
-							<li>Experience : {exp}</li>
-							<li>Level : {lvl}</li>
-						</ul>
-					</div>
-				</Col>
-			</Row>
+			<Form.Group className="mb-3">
+				<Form.Label>Search</Form.Label>
+				<Form.Control
+					type="text"
+					placeholder="masukkan id player yang akan di cari"
+					name="cari"
+					onChange={(event) => {
+						handleChange(event);
+					}}
+				/>
+			</Form.Group>
+			<br />
+			<p>Yang di cari = {id}</p>
 		</>
 	);
 };

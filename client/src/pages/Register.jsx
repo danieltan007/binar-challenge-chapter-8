@@ -14,13 +14,16 @@ const Register = () => {
 		setEmail(event.target.regisEmail.value);
 		setUsername(event.target.regisUsername.value);
 		setPassword(event.target.regisPassword.value);
+
+		event.target.regisEmail.value = "";
+		event.target.regisUsername.value = "";
+		event.target.regisPassword.value = "";
 	};
 
 	const updateData = (username, password, email) => {
 		setEmail(email);
 		setUsername(username);
 		setPassword(password);
-		console.log("cek data masuk = ", email, username, password);
 	};
 
 	return (
